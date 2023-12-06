@@ -1,11 +1,11 @@
 {
-    "name": "front_end_code",
-    "short_name": "front_end_code",
+    "name": "EPL Reservo",
+    "short_name": "EPL Reservo",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
+    "background_color": "#0091F8",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "This is the official website for researving all egyptian leagure matches online!, COME AND RESERVE YOUR TICKET NOW!",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

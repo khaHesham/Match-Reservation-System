@@ -13,9 +13,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'EPL Reservo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.white, inversePrimary: Colors.black),
         useMaterial3: true,
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(
+            fontSize: 48,
+            fontWeight: FontWeight.w500,
+            color: Colors.red,
+          ),
+        ),
       ),
+      debugShowCheckedModeBanner: false,
       home: const MyHomePage(title: 'EPL Reservo'),
     );
   }
@@ -44,7 +53,21 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Row(mainAxisSize: MainAxisSize.min, children: [
+          CircleAvatar(
+            child: Image.asset(
+              '../lib/assets/imgs/epl-logo.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            widget.title,
+            style: const TextStyle(color: Colors.amber),
+          )
+        ]),
         centerTitle: true,
       ),
       body: Center(
