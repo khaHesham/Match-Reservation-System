@@ -58,7 +58,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/imgs/
+    - ./assets/imgs/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -71,10 +71,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  # flutter:
+  fonts:
+    - family: RubikBubbles
+      fonts:
+        - asset: assets/fonts/RubikBubbles-Regular.ttf
+    - family: Whisper
+      fonts:
+        #  the asset folder must be outside the lib folder!!
+        - asset: assets\fonts\Whisper-Regular.ttf
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
