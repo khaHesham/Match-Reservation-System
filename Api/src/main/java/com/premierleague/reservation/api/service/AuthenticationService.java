@@ -3,15 +3,12 @@ package com.premierleague.reservation.api.service;
 import com.premierleague.reservation.api.controllers.auth.AuthenticationRequest;
 import com.premierleague.reservation.api.controllers.auth.AuthenticationResponse;
 import com.premierleague.reservation.api.controllers.auth.RegisterRequest;
-import com.premierleague.reservation.api.dtos.UserDTO;
-import com.premierleague.reservation.api.mappers.UserMapper;
-import com.premierleague.reservation.api.models.Role;
+import com.premierleague.reservation.api.models.enums.Role;
 import com.premierleague.reservation.api.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import com.premierleague.reservation.api.models.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +23,8 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
 var user = User.builder()
-            .first_name(request.getFirstName())
-            .last_name(request.getLastName())
+            .firstName(request.getFirstName())
+            .lastName(request.getLastName())
             .email(request.getUsername())
             .username(request.getUsername())
             .password(passwordEncoder.encode(request.getPassword()))

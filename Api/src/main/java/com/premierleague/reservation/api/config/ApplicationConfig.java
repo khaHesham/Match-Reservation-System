@@ -1,5 +1,6 @@
 package com.premierleague.reservation.api.config;
 
+import com.premierleague.reservation.api.mappers.UserMapper;
 import com.premierleague.reservation.api.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
