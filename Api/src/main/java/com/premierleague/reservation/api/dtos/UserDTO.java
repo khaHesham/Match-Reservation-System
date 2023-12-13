@@ -40,6 +40,5 @@ public class UserDTO implements Serializable {
 
     @Setter
     private String Address;
-
-
+    
 }

@@ -8,32 +8,29 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-//    @Autowired
-//    private  UserMapper userMapper;
+    @Autowired
+    private  UserMapper userMapper;
 
     public UserDTO userProfile(String username) {
-        var user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        Optional<User> user = Optional.ofNullable(userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found")));
 
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setUsername(user.getUsername());
-        userDTO.setRole(user.getRole());
-        userDTO.setCity(user.getCity());
-        userDTO.setBirthDate(user.getBirthDate());
-        userDTO.setAddress(user.getAddress());
-        //System.out.println(userMapper.toDTO(user));
-
-        return userDTO;
-
+        return userMapper.toDTO(user.get());
     }
 
 
+    public UserDTO updateUser(UserDTO userDTO) {
+        if (!userRepository.existsById(userDTO.getId())) {
+            throw new RuntimeException("User not found with id: " + userDTO.getId());
+        }
+
+        User user = userRepository.save(userMapper.toEntity(userDTO));
+        return userMapper.toDTO(user);
+    }
 }

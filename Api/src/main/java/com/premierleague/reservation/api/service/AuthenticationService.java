@@ -28,7 +28,7 @@ var user = User.builder()
             .email(request.getUsername())
             .username(request.getUsername())
             .password(passwordEncoder.encode(request.getPassword()))
-            .role(Role.USER)
+            .role(request.getRole() == null ? Role.USER : Role.valueOf(request.getRole()))
             .build();
         userRepository.save(user);
 
