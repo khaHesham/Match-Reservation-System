@@ -34,4 +34,7 @@ public class Tickets {
     @JoinColumn(name = "fk_user")
     private User user;
 
+    public int getSeatNumber() {
+        return seatNo;
+    }
 }

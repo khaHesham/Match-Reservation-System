@@ -29,4 +29,5 @@ public class MatchDTO implements Serializable {
     String linesman1;
     @Setter
     String linesman2;
+
 }
