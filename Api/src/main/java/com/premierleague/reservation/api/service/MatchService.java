@@ -41,4 +41,22 @@ public class MatchService {
         Match match = matchRepository.save(matchMapper.toEntity(matchDTO));
         return matchMapper.toDTO(match);
     }
+
+    public MatchDTO viewMatch(Long id) {
+        Optional<Match> match = matchRepository.findById(id);
+        if (match.isEmpty()) {
+            throw new RuntimeException("Match not found with id: " + id);
+        }
+        else {
+            return matchMapper.toDTO(match.get());
+        }
+    }
+
+    public Match getMatchById(long matchId) {
+        Optional<Match> match = matchRepository.findById(matchId);
+        if (!match.isPresent()) {
+            throw new RuntimeException("Match not found with id: " + matchId);
+        }
+        return match.get();
+    }
 }

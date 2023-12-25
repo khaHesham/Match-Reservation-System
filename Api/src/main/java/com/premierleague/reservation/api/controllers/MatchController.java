@@ -22,6 +22,15 @@ private MatchService matchService;
         return new ResponseEntity<>(matchService.updateMatch(match), HttpStatus.OK);
     }
 
+    @GetMapping("/view/{id}")
+    public ResponseEntity<MatchDTO> viewMatch(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(matchService.viewMatch(id), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 
 

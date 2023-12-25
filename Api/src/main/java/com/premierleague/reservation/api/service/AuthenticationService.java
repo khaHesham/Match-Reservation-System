@@ -21,8 +21,10 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    private String jwtToken;
+
     public AuthenticationResponse register(RegisterRequest request) {
-var user = User.builder()
+        var user = User.builder()
             .firstName(request.getFirstName())
             .lastName(request.getLastName())
             .email(request.getUsername())
@@ -32,14 +34,22 @@ var user = User.builder()
             .build();
         userRepository.save(user);
 
-        var jwtToken = jwtService.generateToken(user);
+        jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
 
+    public String getUsername(){
+        return jwtService.extractUsername(jwtToken);
+    }
+
+    public String getRole(){
+        return userRepository.findUserByUsername(getUsername()).get().getRole().toString();
+    }
+
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
             request.getEmail(),
             request.getPassword()
     )
@@ -47,10 +57,12 @@ var user = User.builder()
     var user = userRepository.findUserByUsername(request.getEmail())
             .orElseThrow(() -> new RuntimeException("User not found"));
 
-    var jwtToken = jwtService.generateToken(user);
+    jwtToken = jwtService.generateToken(user);
 
     return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
+
+
 }

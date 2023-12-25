@@ -33,4 +33,28 @@ public class UserService {
         User user = userRepository.save(userMapper.toEntity(userDTO));
         return userMapper.toDTO(user);
     }
+
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("User not found with id: " + id);
+        }
+
+        userRepository.deleteById(id);
+    }
+
+    public User getUserById(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (!user.isPresent()) {
+            throw new RuntimeException("User not found with id: " + userId);
+        }
+        return user.get();
+    }
+
+    public User getUserByUsername(String username) {
+        Optional<User> user = userRepository.findUserByUsername(username);
+        if (!user.isPresent()) {
+            throw new RuntimeException("User not found with username: " + username);
+        }
+        return user.get();
+    }
 }
