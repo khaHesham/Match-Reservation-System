@@ -15,6 +15,10 @@ public class StadiumService {
     @Autowired
     private StadiumMapper stadiumMapper;
 
+    public Stadium getStadiumById(Long stadId) {
+        return stadiumRepository.findById(stadId).get();
+    }
+
     public StadiumDTO createStadium(StadiumDTO stadiumDTO) {
         Stadium stadium = stadiumRepository.save(stadiumMapper.toEntity(stadiumDTO));
         return stadiumMapper.toDTO(stadium);

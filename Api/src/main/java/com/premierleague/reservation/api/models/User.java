@@ -39,6 +39,9 @@ public class User implements UserDetails {
     @Column(name = "city")
     private String city;
 
+    @Column(name = "requested_role")
+    private boolean requestedRole = false;
+
     @Column(name = "birth_date")
     private String birthDate;
 

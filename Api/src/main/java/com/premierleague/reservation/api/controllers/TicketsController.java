@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class TicketsController {
 
     @Autowired
-    private TicketsService tecketsService;
+    private TicketsService ticketsService;
     @Autowired
     private UserRepository userRepository;
 
@@ -23,16 +23,14 @@ public class TicketsController {
     @PostMapping("/reserve/{matchId}/{seatN}")
     public boolean createTicket(@PathVariable("seatN") int seatNumber, @PathVariable("matchId") int matchId){
 
-        return tecketsService.reserveTicket(authenticationService.getUsername(), seatNumber, matchId);
+        return ticketsService.reserveTicket(authenticationService.getUsername(), seatNumber, matchId);
     }
 
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteTicket(@PathVariable("id") Long id) {
+    @DeleteMapping("/delete/{matchId}")
+    public ResponseEntity<String> deleteTicket(@PathVariable("matchId") Long matchId) {
         try {
-            // need to check if the user performing this action is an admin
-            // else throw unauthorized exception
-            tecketsService.deleteTicket(id);
+            ticketsService.deleteTicket(matchId);
             return ResponseEntity.ok("Ticket deleted successfully");
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());

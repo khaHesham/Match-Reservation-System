@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 public class MatchController {
 @Autowired
 private MatchService matchService;
-    @PostMapping("/create")
-    public ResponseEntity<MatchDTO> createMatch(@RequestBody MatchDTO match) {
-        return new ResponseEntity<>(matchService.createMatch(match), HttpStatus.CREATED);
+    @PostMapping("/create/{stadId}")
+    public ResponseEntity<MatchDTO> createMatch(@RequestBody MatchDTO match, @PathVariable("stadId") Long stadId) {
+        return new ResponseEntity<>(matchService.createMatch(match,stadId), HttpStatus.CREATED);
     }
 
     @PutMapping("/update")

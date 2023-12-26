@@ -1,12 +1,16 @@
 package com.premierleague.reservation.api.service;
 
 import com.premierleague.reservation.api.dtos.MatchDTO;
+import com.premierleague.reservation.api.exceptions.UnauthorizedException;
 import com.premierleague.reservation.api.mappers.MatchMapper;
 import com.premierleague.reservation.api.models.Match;
+import com.premierleague.reservation.api.models.Stadium;
 import com.premierleague.reservation.api.repositories.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +22,13 @@ public class MatchService {
     @Autowired
     private MatchMapper matchMapper;
 
+    @Autowired
+    private StadiumService stadiumService;
+
+    @Autowired
+    private AuthenticationService authenticationService;
+
+
     public List<MatchDTO> getAllMatches() {
         Optional<List<Match>> matches = Optional.ofNullable(matchRepository.findAll());
         if (matches.isEmpty()) {
@@ -28,8 +39,26 @@ public class MatchService {
         }
     }
 
-    public MatchDTO createMatch(MatchDTO matchDTO) {
-        Match match = matchRepository.save(matchMapper.toEntity(matchDTO));
+    public MatchDTO createMatch(MatchDTO matchDTO, Long stadId) {
+       // check if iam manager
+        if(!authenticationService.getRole().equals("EFA_MANAGER")){
+            throw new UnauthorizedException("You are not authorized to perform this action");
+        }
+
+        Stadium stadium = stadiumService.getStadiumById(stadId);
+
+        Match match = Match.builder()
+                .date(matchDTO.getDate())
+                .homeTeam(matchDTO.getHomeTeam())
+                .awayTeam(matchDTO.getAwayTeam())
+                .stadium(stadium)
+                .referee(matchDTO.getReferee())
+                .linesman1(matchDTO.getLinesman1())
+                .linesman2(matchDTO.getLinesman2())
+                .time((new Date()).toString())
+                .build();
+
+        matchRepository.save(match);
         return matchMapper.toDTO(match);
     }
 
