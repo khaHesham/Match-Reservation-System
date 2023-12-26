@@ -5,11 +5,13 @@ import com.premierleague.reservation.api.exceptions.UnauthorizedException;
 import com.premierleague.reservation.api.mappers.MatchMapper;
 import com.premierleague.reservation.api.models.Match;
 import com.premierleague.reservation.api.models.Stadium;
+import com.premierleague.reservation.api.models.Tickets;
 import com.premierleague.reservation.api.repositories.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +69,10 @@ public class MatchService {
             throw new RuntimeException("Match not found with id: " + matchDTO.getId());
         }
 
+        if(!authenticationService.getRole().equals("EFA_MANAGER")){
+            throw new UnauthorizedException("You are not authorized to perform this action");
+        }
+
         Match match = matchRepository.save(matchMapper.toEntity(matchDTO));
         return matchMapper.toDTO(match);
     }
@@ -87,5 +93,14 @@ public class MatchService {
             throw new RuntimeException("Match not found with id: " + matchId);
         }
         return match.get();
+    }
+
+    public List<Tickets> viewReservedMatches(Long id) {
+        List<Tickets> tickets = matchRepository.findById(id).get().getTickets();
+
+        if (tickets.isEmpty())
+            throw new RuntimeException("No tickets found for this match");
+
+        return tickets;
     }
 }

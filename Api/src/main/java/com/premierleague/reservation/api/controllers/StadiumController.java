@@ -1,6 +1,7 @@
 package com.premierleague.reservation.api.controllers;
 
 import com.premierleague.reservation.api.dtos.StadiumDTO;
+import com.premierleague.reservation.api.exceptions.UnauthorizedException;
 import com.premierleague.reservation.api.service.StadiumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,12 @@ public class StadiumController {
 
     @PostMapping("/create")
     public ResponseEntity<StadiumDTO> createStadium(@RequestBody StadiumDTO stadiumDTO){
-        return new ResponseEntity<>(stadiumService.createStadium(stadiumDTO), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(stadiumService.createStadium(stadiumDTO), HttpStatus.CREATED);
+        } catch (UnauthorizedException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
     }
 
 
