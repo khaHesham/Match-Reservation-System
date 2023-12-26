@@ -13,9 +13,14 @@ This project involves creating an automated ticket reservation system for Egypti
 
 ## Data Models
 
-- Users have essential personal data.
-- Customers are classified as Managers/Fans.
-- Matches include home team, away team, venue, date & time, main referee, and two linesmen.
+- **Users** have essential personal data are classified as (Admin,Managers,Fans,guests)
+- **Matches** include home team, away team, venue, date & time, main referee, and two linesmen.
+- **Tickets** the reserved ticket for seat in the match
+- **Stadium** carry information about user
+
+## ER Diagram
+![image](https://github.com/khaHesham/Match-Reservation-System/assets/75990647/509c6c07-b680-4487-a200-165878c0f00e)
+
 
 ## Functionality
 
